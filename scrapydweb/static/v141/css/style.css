@@ -127,8 +127,8 @@ nav>.title {
     background: #feb324;
     text-align: center;
     position: relative;
-
     height: 51px;
+    font-family: MicrosoftYaHei;
 }
 
 nav>.title:after {
