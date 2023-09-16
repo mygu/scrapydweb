@@ -8,6 +8,7 @@ import traceback
 
 from flask import Flask, current_app, render_template, url_for
 from flask_compress import Compress
+from flask_cors import CORS
 from logparser import __version__ as LOGPARSER_VERSION
 
 from .__version__ import __url__, __version__
@@ -61,6 +62,7 @@ def internal_server_error(error):
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app, origins='*')
     app.config.from_mapping(
         SECRET_KEY='dev',
     )
