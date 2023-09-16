@@ -54,6 +54,7 @@ setup(
         "tzlocal==1.5.1",  # Dec 1, 2017
         "w3lib==1.19.0",  # Jan 25, 2018
         "Werkzeug==0.14.1",  # Jan 1, 2018
+        "Flask-Cors==4.0.0",
     ],
 
     entry_points={
