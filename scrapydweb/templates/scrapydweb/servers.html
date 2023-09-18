@@ -49,132 +49,132 @@
 {% endif %}
 
 
-<h2><a class="link" target="_blank" href="{{ url }}">Monitor and control all of your Scrapyd servers.</a></h2>
+<h2><a class="link" target="_blank" href="{{ url }}">监控和控制您的所有Scrapyd服务器.</a></h2>
 
 <form method="post" enctype="multipart/form-data" hidden></form>
 
 <div id="app">
 <template>
   <el-tabs v-model="activeTab" type="border-card" @tab-click="handleTabClick">
-    <el-tab-pane label="Deploy Project" name="deploy">
-      <el-button type="primary" @click="deployProject">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}Deploy Project</el-button>
+    <el-tab-pane label="部署项目" name="deploy">
+      <el-button type="primary" @click="deployProject">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}部署项目</el-button>
     </el-tab-pane>
 
-    <el-tab-pane label="Run Spider" name="schedule">
+    <el-tab-pane label="运行爬虫" name="schedule">
       <el-col :span="5">
-        <el-input v-model="input.project" placeholder="the project name (optional)" clearable></el-input>
+        <el-input v-model="input.project" placeholder="项目名称 (可选)" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-input v-model="input.version" placeholder="version ({{ DEFAULT_LATEST_VERSION }})" clearable></el-input>
+        <el-input v-model="input.version" placeholder="版本 ({{ DEFAULT_LATEST_VERSION }})" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-input v-model="input.spider" placeholder="the spider name (optional)" clearable></el-input>
+        <el-input v-model="input.spider" placeholder="排重名称 (可选)" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-button type="success" @click="runSpider">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}Run Spider</el-button>
+        <el-button type="success" @click="runSpider">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}运行爬虫</el-button>
       </el-col>
     </el-tab-pane>
 
-    <el-tab-pane label="Stop Job" name="stop">
+    <el-tab-pane label="停止作业" name="stop">
       <el-col :span="5">
-        <el-input v-model="input.project" placeholder="the project name" clearable></el-input>
+        <el-input v-model="input.project" placeholder="项目名称" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-input v-model="input.jobid" placeholder="the job id" clearable></el-input>
+        <el-input v-model="input.jobid" placeholder="作业ID" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-button type="danger" @click="stopJob">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}Stop Job</el-button>
+        <el-button type="danger" @click="stopJob">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}停止作业</el-button>
       </el-col>
     </el-tab-pane>
 
     {% if SCRAPYD_SERVERS_AMOUNT > 1 %}
-    <el-tab-pane label="Get Reports" name="getreports">
+    <el-tab-pane label="获取报告" name="getreports">
       <el-col :span="5">
-        <el-input v-model="input.project" placeholder="the project name" clearable></el-input>
+        <el-input v-model="input.project" placeholder="项目名称" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-input v-model="input.spider" placeholder="the spider name" clearable></el-input>
+        <el-input v-model="input.spider" placeholder="爬虫名称" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-input v-model="input.jobid" placeholder="the job id" clearable></el-input>
+        <el-input v-model="input.jobid" placeholder="作业ID" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-button type="primary" @click="getReports">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}Get Reports</el-button>
+        <el-button type="primary" @click="getReports">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}获取报告</el-button>
       </el-col>
     </el-tab-pane>
     {% endif %}
 
-    <el-tab-pane label="List Stats" name="liststats">
+    <el-tab-pane label="统计列表" name="liststats">
       <el-col :span="5">
-        <el-input v-model="input.project" placeholder="the project name" clearable></el-input>
+        <el-input v-model="input.project" placeholder="项目名称" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-input v-model="input.jobid" placeholder="the job id" clearable></el-input>
+        <el-input v-model="input.jobid" placeholder="作业ID" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-button type="primary" @click="listStats" plain>{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}List Stats</el-button>
-      </el-col>
-    </el-tab-pane>
-
-    <el-tab-pane label="List Projects" name="listprojects">
-      <el-button type="primary" @click="listProjects" plain>{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}List Projects</el-button>
-    </el-tab-pane>
-
-    <el-tab-pane label="List Versions" name="listversions">
-      <el-col :span="5">
-        <el-input v-model="input.project" placeholder="the project name" clearable></el-input>
-      </el-col>
-      <el-col :span="5">
-        <el-button type="primary" @click="listVersions" plain>{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}List Versions</el-button>
+        <el-button type="primary" @click="listStats" plain>{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}统计列表</el-button>
       </el-col>
     </el-tab-pane>
 
-    <el-tab-pane label="List Spiders" name="listspiders">
+    <el-tab-pane label="项目列表" name="listprojects">
+      <el-button type="primary" @click="listProjects" plain>{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}项目列表</el-button>
+    </el-tab-pane>
+
+    <el-tab-pane label="版本列表" name="listversions">
       <el-col :span="5">
-        <el-input v-model="input.project" placeholder="the project name" clearable></el-input>
+        <el-input v-model="input.project" placeholder="项目名称" clearable></el-input>
+      </el-col>
+      <el-col :span="5">
+        <el-button type="primary" @click="listVersions" plain>{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}版本列表</el-button>
+      </el-col>
+    </el-tab-pane>
+
+    <el-tab-pane label="爬虫列表" name="listspiders">
+      <el-col :span="5">
+        <el-input v-model="input.project" placeholder="项目名称" clearable></el-input>
       </el-col>
       <el-col :span="5">
         <el-input v-model="input.version" placeholder="version ({{ DEFAULT_LATEST_VERSION }})" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-button type="primary" @click="listSpiders" plain>{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}List Spiders</el-button>
+        <el-button type="primary" @click="listSpiders" plain>{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}爬虫列表</el-button>
       </el-col>
     </el-tab-pane>
 
-    <el-tab-pane label="List Running Jobs" name="listjobs">
+    <el-tab-pane label="作业中列表" name="listjobs">
       <el-col :span="5">
-        <el-input v-model="input.project" placeholder="the project name" clearable></el-input>
+        <el-input v-model="input.project" placeholder="项目名称" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-button type="primary" @click="listJobs" plain>{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}List Running Jobs</el-button>
-      </el-col>
-    </el-tab-pane>
-
-    <el-tab-pane label="Delete Version" name="delversion">
-      <el-col :span="5">
-        <el-input v-model="input.project" placeholder="the project name" clearable></el-input>
-      </el-col>
-      <el-col :span="5">
-        <el-input v-model="input.version_delversion" placeholder="the project version" clearable></el-input>
-      </el-col>
-      <el-col :span="5">
-        <el-button type="info" @click="deleteVersion">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}Delete Version</el-button>
+        <el-button type="primary" @click="listJobs" plain>{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}作业中列表</el-button>
       </el-col>
     </el-tab-pane>
 
-    <el-tab-pane label="Delete Project" name="delproject">
+    <el-tab-pane label="删除版本" name="delversion">
       <el-col :span="5">
-        <el-input v-model="input.project" placeholder="the project name" clearable></el-input>
+        <el-input v-model="input.project" placeholder="项目名称" clearable></el-input>
       </el-col>
       <el-col :span="5">
-        <el-button type="danger" @click="deleteProject">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}Delete Project</el-button>
+        <el-input v-model="input.version_delversion" placeholder="项目版本" clearable></el-input>
+      </el-col>
+      <el-col :span="5">
+        <el-button type="info" @click="deleteVersion">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}删除版本</el-button>
+      </el-col>
+    </el-tab-pane>
+
+    <el-tab-pane label="删除项目" name="delproject">
+      <el-col :span="5">
+        <el-input v-model="input.project" placeholder="项目名称" clearable></el-input>
+      </el-col>
+      <el-col :span="5">
+        <el-button type="danger" @click="deleteProject">{% if SCRAPYD_SERVERS_AMOUNT > 1 %}Multinode {% endif %}删除项目</el-button>
       </el-col>
     </el-tab-pane>
   </el-tabs>
 
 
   <el-col :span="4">
-    <el-button id="invert_selection" @click="invertSelection" type="warning" size="mini" plain>invert selection</el-button>
+    <el-button id="invert_selection" @click="invertSelection" type="warning" size="mini" plain>全部反选</el-button>
   </el-col>
 
   <el-col :span="3">
@@ -184,22 +184,22 @@
     </el-select>
   </el-col>
   <el-col :span="5">
-    <el-input v-model="filter" placeholder="type to filter" prefix-icon="el-icon-search" clearable>
+    <el-input v-model="filter" placeholder="筛选类型" prefix-icon="el-icon-search" clearable>
     </el-input>
   </el-col>
   <el-col class="line" :span="0.1">&nbsp;</el-col>
   <el-col :span="3">
-    <el-switch v-model="invert_filter" active-color="#67c23a" active-text="invert filter" inactive-text="" class="switch"></el-switch>
+    <el-switch v-model="invert_filter" active-color="#67c23a" active-text="反向过滤" inactive-text="" class="switch"></el-switch>
   </el-col>
 
   <span id="total"><el-badge :value={{ SCRAPYD_SERVERS_AMOUNT }} class="item">
-    <el-button type="text" disabled>total</el-button>
+    <el-button type="text" disabled>总计</el-button>
   </el-badge></span>
   <span id="displayed"><el-badge :value="tableDataComputed.length" class="item">
-    <el-button type="text" disabled>displayed</el-button>
+    <el-button type="text" disabled>已显示</el-button>
   </el-badge></span>
   <span id="selected"><el-badge :value="nodesSelected.length" class="item">
-    <el-button type="text" disabled>selected</el-button>
+    <el-button type="text" disabled>已选择</el-button>
   </el-badge></span>
 
 
@@ -231,10 +231,10 @@
   >
 
     <el-table-column type="selection" align="center" :reserve-selection="true" fixed></el-table-column>
-    <el-table-column prop="index" label="Node" sortable width="70" align="center" fixed></el-table-column>
-    <el-table-column prop="selected" label="Selected" sortable width="90" align="center" fixed></el-table-column>
-    <el-table-column prop="group" label="Group" sortable width="120" align="center" show-overflow-tooltip fixed></el-table-column>
-    <el-table-column prop="jobs" label="Scrapyd server" sortable width="200" align="left" show-overflow-tooltip
+    <el-table-column prop="index" label="序号" sortable width="70" align="center" fixed></el-table-column>
+    <el-table-column prop="selected" label="是否选中" sortable width="90" align="center" fixed></el-table-column>
+    <el-table-column prop="group" label="分组" sortable width="120" align="center" show-overflow-tooltip fixed></el-table-column>
+    <el-table-column prop="jobs" label="服务器" sortable width="200" align="left" show-overflow-tooltip
       header-align="center" :sort-method="sortScrapydServer" fixed>
       <template slot-scope="scope">
         <a :class="scope.row.cls"
@@ -248,22 +248,22 @@
         </a>
       </template>
     </el-table-column>
-    <el-table-column prop="node_name" label="Hostname" sortable width="120" align="center" show-overflow-tooltip :formatter="formatter" fixed></el-table-column>
+    <el-table-column prop="node_name" label="主机名称" sortable width="120" align="center" show-overflow-tooltip :formatter="formatter" fixed></el-table-column>
 
-    <el-table-column prop="pending" label="Pending" sortable width="85" align="center" :sort-method="sortPending" v-if="showDaemonStatus">
+    <el-table-column prop="pending" label="等待中" sortable width="85" align="center" :sort-method="sortPending" v-if="showDaemonStatus">
         <template slot-scope="scope">
           <div v-bind:class="scope.row.pendingClass">{{scope.row.pending}}</div>
         </template>
     </el-table-column>
-    <el-table-column prop="running" label="Running" sortable width="85" align="center" :sort-method="sortRunning" v-if="showDaemonStatus">
+    <el-table-column prop="running" label="运行中" sortable width="85" align="center" :sort-method="sortRunning" v-if="showDaemonStatus">
         <template slot-scope="scope">
           <div v-bind:class="scope.row.runningClass">{{scope.row.running}}</div>
         </template>
     </el-table-column>
-    <el-table-column prop="finished" label="Finished" sortable width="90" align="center" :sort-method="sortFinished"  v-if="showDaemonStatus">
+    <el-table-column prop="finished" label="已完成" sortable width="90" align="center" :sort-method="sortFinished"  v-if="showDaemonStatus">
     </el-table-column>
 
-    <el-table-column prop="listinfo" label="Status / List info" sortable min-width="135" align="left" show-overflow-tooltip :sort-method="sortListinfo">
+    <el-table-column prop="listinfo" label="状态 / 信息列表" sortable min-width="135" align="left" show-overflow-tooltip :sort-method="sortListinfo">
       <template slot-scope="scope">
         <a target="_blank" class="request" v-bind:style="{ display: scope.row.display_listinfo }" :href="scope.row.url_listinfo">REQUEST</a>
         <em v-bind:class="scope.row.emClass">{{scope.row.return_listinfo}}</em>
@@ -285,34 +285,34 @@ var Main = {
       maxHeight: window.innerHeight - 350,
       options: [{
         value: '',
-        label: 'All Columns'
+        label: '所有列'
       }, {
         value: 'index',
-        label: 'Index'
+        label: '序号'
       }, {
         value: 'selected',
-        label: 'Selected'
+        label: '是否选中'
       }, {
         value: 'group',
-        label: 'Group'
+        label: '分组'
       }, {
         value: 'SCRAPYD_SERVER', // jobs
-        label: 'Scrapyd server'
+        label: '服务器'
       }, {
         value: 'node_name',
-        label: 'Hostname'
+        label: '主机名称'
       }, {
         value: 'return_listinfo', // status
-        label: 'Status / List info'
+        label: '状态 / 信息列表'
       }, {
         value: 'pending',
-        label: 'Pending'
+        label: '等待中'
       }, {
         value: 'running',
-        label: 'Running'
+        label: '运行中'
       }, {
         value: 'finished',
-        label: 'Finished'
+        label: '已完成'
       }],
       selected_column: '',
 
@@ -746,7 +746,7 @@ var Main = {
 
     checkInput(key, msg) {
       if (!this.input[key]) {
-        alert(msg+" is required");
+        alert(msg+"不能为空");
         return true;
       } else {
         this.storeInput(key);
@@ -755,7 +755,7 @@ var Main = {
 
     checkNodesSelected() {
       if (!this.nodesSelected.length) {
-        alert("Select at least one node");
+        alert("请至少选择一个服务器节点");
         return true;
       }
     },
@@ -795,7 +795,7 @@ var Main = {
     },
 
     listStats() {
-      if (this.checkInput('project', "the project name")) {
+      if (this.checkInput('project', "项目名称")) {
         return;
       }
       if (this.checkInput('jobid', "the job id")) {
@@ -820,7 +820,7 @@ var Main = {
     },
 
     listVersions() {
-      if (this.checkInput('project', "the project name")) {
+      if (this.checkInput('project', "项目名称")) {
         return;
       }
       if (this.checkNodesSelected()) {
@@ -832,7 +832,7 @@ var Main = {
     },
 
     listSpiders() {
-      if (this.checkInput('project', "the project name")) {
+      if (this.checkInput('project', "项目名称")) {
         return;
       }
       if (this.checkNodesSelected()) {
@@ -849,7 +849,7 @@ var Main = {
     },
 
     listJobs() {
-      if (this.checkInput('project', "the project name")) {
+      if (this.checkInput('project', "项目名称")) {
         return;
       }
       if (this.checkNodesSelected()) {
@@ -906,7 +906,7 @@ var Main = {
     },
 
     stopJob() {
-      if (this.checkInput('project', "the project name")) {
+      if (this.checkInput('project', "项目名称")) {
         return;
       }
       if (this.checkInput('jobid', "the job id")) {
@@ -921,10 +921,10 @@ var Main = {
     },
 
     deleteVersion() {
-      if (this.checkInput('project', "the project name")) {
+      if (this.checkInput('project', "项目名称")) {
         return;
       }
-      if (this.checkInput('version_delversion', "the project version")) {
+      if (this.checkInput('version_delversion', "项目版本")) {
         return;
       }
       if (this.checkNodesSelected()) {
@@ -936,7 +936,7 @@ var Main = {
     },
 
     deleteProject() {
-      if (this.checkInput('project', "the project name")) {
+      if (this.checkInput('project', "项目名称")) {
         return;
       }
       if (this.checkNodesSelected()) {
