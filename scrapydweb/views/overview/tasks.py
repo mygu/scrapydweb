@@ -76,7 +76,7 @@ class TasksView(BaseView):
 
     def query_tasks(self):
         if self.scheduler.state == STATE_PAUSED:
-            flash("Click the DISABLED button to enable the scheduler for timer tasks. ", self.WARN)
+            flash("点击红色已禁用按钮来启用定时任务调度器", self.WARN)
         self.remove_apscheduler_job_without_task()
 
         # https://stackoverflow.com/questions/43103585/python-flask-sqlalchemy-pagination
@@ -166,7 +166,7 @@ class TasksView(BaseView):
                         task.status = 'Running'
                         action = 'pause'
                         if self.scheduler.state == STATE_PAUSED:
-                            task.next_run_time = "Click DISABLED button first. "
+                            task.next_run_time = "请先启用定时任务调度器"
                         else:
                             # TypeError: argument of type 'datetime.datetime' is not iterable
                             task.next_run_time = str(apscheduler_job.next_run_time)  # '2019-01-01 00:00:01+08:00'

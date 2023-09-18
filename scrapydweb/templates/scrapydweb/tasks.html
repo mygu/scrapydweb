@@ -36,17 +36,17 @@ window.onload = function(){
 
 
 <div>
-  <h2 style="display: inline-block;">Get the list of timer tasks.</h2>
-  <label title="click to {% if scheduler_action_button == 'ENABLED' %}disable{% else %}enable{% endif %} the scheduler for timer tasks">
+  <h2 style="display: inline-block;">获取定时任务列表</h2>
+  <label title="点击{% if scheduler_action_button == 'ENABLED' %}禁用{% else %}启用{% endif %}定时任务调度器">
     <a class="button {% if scheduler_action_button == 'ENABLED' %}safe{% else %}danger{% endif %}" onclick="taskXHR('{{ url_scheduler_action }}');">
-      {{ scheduler_action_button }}
+      {% if scheduler_action_button == 'ENABLED' %}已启用{% else %}已禁用{% endif %}
     </a>
   </label>
-  <label title="add a timer task">
+  <label title="添加一个定时任务">
     <a class="button safe narrow" href="{{ url_add_task }}">+</a>
   </label>
-  <label title="check out added tasks and exception log">
-    <a class="link" target="_blank" href="{{ url_tasks_history }}">history</a>
+  <label title="检查添加的任务和异常日志">
+    <a class="link" target="_blank" href="{{ url_tasks_history }}">历史记录</a>
   </label>
 </div>
 
@@ -112,32 +112,32 @@ window.onload = function(){
       </template>
     </el-table-column>
 
-    <el-table-column prop="id" label="Task #" fixed sortable align="center" width="75"></el-table-column>
-    <el-table-column prop="name" label="Name" fixed sortable show-overflow-tooltip align="center" width="100"></el-table-column>
-    <el-table-column prop="project" label="Project" fixed sortable show-overflow-tooltip align="center" width="150"></el-table-column>
-    <el-table-column prop="spider" label="Spider" fixed sortable show-overflow-tooltip align="center" width="150"></el-table-column>
+    <el-table-column prop="id" label="任务ID" fixed sortable align="center" width="75"></el-table-column>
+    <el-table-column prop="name" label="名称" fixed sortable show-overflow-tooltip align="center" width="100"></el-table-column>
+    <el-table-column prop="project" label="项目" fixed sortable show-overflow-tooltip align="center" width="150"></el-table-column>
+    <el-table-column prop="spider" label="爬虫" fixed sortable show-overflow-tooltip align="center" width="150"></el-table-column>
     <!-- default-sort would cause background color of the buttons flash once -->
-    <el-table-column prop="status" label="Status" fixed sortable :sort-orders="sortOrders" align="center" :sort-by=['status','id'] width="85">
+    <el-table-column prop="status" label="状态" fixed sortable :sort-orders="sortOrders" align="center" :sort-by=['status','id'] width="85">
       <template slot-scope="scope">
         <label :title="scope.row.status_label">
           <a :class="scope.row.status_class" @click="handleStatusClick(scope.row.url_status)">{{scope.row.status}}</a>
         </label>
       </template>
     </el-table-column>
-    <el-table-column prop="actions" label="Actions" sortable :sort-by=['index'] align="right" width="160">
+    <el-table-column prop="actions" label="操作" sortable :sort-by=['index'] align="right" width="160">
       <template slot-scope="scope">
-        <label title="click to fire the task right now">
-          <a class="state safe" :style="{ display: scope.row.display_fire }" @click="handleStatusClick(scope.row.url_fire)">Fire</a>
+        <label title="点击立即执行任务">
+          <a class="state safe" :style="{ display: scope.row.display_fire }" @click="handleStatusClick(scope.row.url_fire)">执行</a>
         </label>
         <label :title="scope.row.action_label">
           <a :class="scope.row.action_class" @click="deleteRow(scope.$index, tableData)">{{scope.row.action}}</a>
         </label>
-        <label title="click to update or copy the task">
-          <a class="state normal" @click="handleStatusClick(scope.row.url_edit)">Edit</a>
+        <label title="点击可更新或复制任务">
+          <a class="state normal" @click="handleStatusClick(scope.row.url_edit)">编辑</a>
         </label>
       </template>
     </el-table-column>
-    <el-table-column prop="prev_run_result" label="Prev run result" sortable align="center" :sort-method="sortPrevRunResult" :sort-orders="sortOrders" width="175">
+    <el-table-column prop="prev_run_result" label="上一次运行结果" sortable align="center" :sort-method="sortPrevRunResult" :sort-orders="sortOrders" width="175">
       <template slot-scope="scope">
         <label :title="scope.row.prev_run_result_label">
           <a :class="scope.row.prev_run_result_class" :href="scope.row.url_prev_run_result" :target="scope.row.prev_run_result_target">
@@ -149,10 +149,10 @@ window.onload = function(){
     </el-table-column>
     <!-- with jitter: 2019-01-01 00:00:01.123456+08:00 -->
     <!-- Click the DISABLED button first -->
-    <el-table-column prop="next_run_time" label="Next run time" sortable align="center" width="240">
+    <el-table-column prop="next_run_time" label="下一次运行时间" sortable align="center" width="240">
       <template slot-scope="scope"><span :style="{ color: scope.row.next_run_time_color }">{{scope.row.next_run_time}}</span></template>
     </el-table-column>
-    <el-table-column prop="task_results" label="Task results" sortable min-width="110" align="left" :sort-method="sortTaskResults" :sort-orders="sortOrders">
+    <el-table-column prop="task_results" label="任务结果" sortable min-width="110" align="left" :sort-method="sortTaskResults" :sort-orders="sortOrders">
       <template slot-scope="scope"><a :class="scope.row.task_results_class" :href="scope.row.url_task_results">{{scope.row.run_times}}</a></template>
     </el-table-column>
   </el-table>
@@ -202,13 +202,13 @@ var Main = {
         id: {{ task.id }},
         name: '{{ task.name|replace("\\", "\\\\")|replace("'", "\\'")|replace("\r", " ")|replace("\n", " ")|safe }}',
 
-        status: '{{ task.status }}',
-        status_label: {% if task.status == 'Running' %}"click to pause the task"{% elif task.status == 'Paused' %}"click to resume the task"{% else %}"check out results of the task"{% endif %},
+        status: {% if task.status == 'Running' %}"运行中"{% elif task.status == 'Paused' %}"已暂停"{% else %}"已完成"{% endif %},
+        status_label: {% if task.status == 'Running' %}"点击暂停任务"{% elif task.status == 'Paused' %}"点击恢复任务"{% else %}"检查任务结果"{% endif %},
         url_status: '{{ task.url_status }}',
         status_class: 'state '+ {% if task.status == 'Running' %}'safe'{% elif task.status == 'Paused' %}'warning'{% else %}'normal'{% endif %},
 
-        action: '{{ task.action }}',
-        action_label: {% if task.action == 'Stop' %}"click to stop the task forever"{% else %}"click to delete the task and its results"{% endif %},
+        action: {% if task.action == 'Stop' %}"终止"{% else %}"删除"{% endif %},
+        action_label: {% if task.action == 'Stop' %}"点击将永久终止任务"{% else %}"点击将删除任务和相关结果"{% endif %},
         url_action: '{{ task.url_action }}',
         action_class: 'state '+ {% if task.action == 'Stop' %}'danger'{% else %}'delete'{% endif %},
 

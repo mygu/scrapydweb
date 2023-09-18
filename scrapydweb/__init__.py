@@ -324,8 +324,7 @@ def handle_template_context(app):
             static_css_utf8=url_for(STATIC, filename='%s/css/utf8.css' % VERSION),
             static_css_utf8_mobileui=url_for(STATIC, filename='%s/css/utf8_mobileui.css' % VERSION),
 
-            static_css_element_ui_index=url_for(STATIC,
-                                                filename='%s/element-ui@2.4.6/lib/theme-chalk/index.css' % VERSION),
+            static_css_element_ui_index=url_for(STATIC, filename='%s/element-ui@2.4.6/lib/theme-chalk/index.css' % VERSION),
             static_js_element_ui_index=url_for(STATIC, filename='%s/element-ui@2.4.6/lib/index.js' % VERSION),
 
             static_js_common=url_for(STATIC, filename='%s/js/common.js' % VERSION),

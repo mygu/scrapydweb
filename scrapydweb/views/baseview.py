@@ -34,7 +34,7 @@ class BaseView(View):
     NA = 'N/A'
     INFO = 'info'
     WARN = 'warning'
-    DEFAULT_LATEST_VERSION = 'default: the latest version'
+    DEFAULT_LATEST_VERSION = '默认: 最新版本'
     LEGAL_NAME_PATTERN = LEGAL_NAME_PATTERN
     STRICT_NAME_PATTERN = STRICT_NAME_PATTERN
     ALERT_TRIGGER_KEYS = ALERT_TRIGGER_KEYS
