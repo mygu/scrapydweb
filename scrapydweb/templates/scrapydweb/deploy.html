@@ -76,14 +76,14 @@
 
 {% block body %}
 <h2>
-  <a class="link" target="_blank" href="{{ url }}">Add a version to a project, creating the project if it doesn't exist.</a>
-  <label title="manage existing projects and versions">
+  <a class="link" target="_blank" href="{{ url }}">添加项目或更新部署项目新版本</a>
+  <label title="管理现有的项目和版本">
     <a class="button safe narrow" href="{{ url_projects }}">+</a>
   </label>
 </h2>
 
 
-<div class="wrap collapse-wrap">
+<div class="wrap collapse-wrap" style="display: none;">
   <ul class="collapse">
     <li>
       <div class="title">
@@ -136,17 +136,44 @@
 
 <div class="tab-wrap wrap">
   <ul class="tab tab-header clear-float">
-    <li id="header_package">Auto packaging</li>
-    <li id="header_upload">Upload file</li>
+    <li id="header_upload">上传项目</li>
+    <li id="header_package">部署项目</li>
   </ul>
   <ul class="tab tab-content">
+    <li id="content_upload">
+      <div class="line-container">
+        <div class="key">项目文件</div>
+        <div>
+          <input type="text" id="filename" class="value readonly" readonly="readonly" placeholder="支持文件类型：egg、zip、tar.gz" />
+          <div class="form-item-error">请选择并上传项目文件</div>
+        </div>
+        <div id="filesize" class="key" style="padding-left: 12px; width: unset;"></div>
+      </div>
+
+      <div class="line-container">
+        <div class="key"><span>*</span>项目名称</div>
+        <div>
+          <input type="text" id="project" class="value readonly" readonly="readonly" placeholder="项目名称" />
+          <div class="form-item-error">请输入项目名称</div>
+        </div>
+      </div>
+
+      <div class="line-container">
+        <div class="key">项目版本</div>
+        <div>
+          <input type="text" id="version" class="value readonly" readonly="readonly" placeholder="项目版本" />
+          <div class="form-item-error">请输入项目版本</div>
+        </div>
+      </div>
+    </li>
+
     <li id="content_package">
       <!-- <p style="margin-left: 130px;" href="{{ url_servers }}">{{ projects|length|string }} projects found</p> -->
       {% if folders|length == 0 %}
-      <h3>No projects found in '{{ SCRAPY_PROJECTS_DIR }}' of the ScrapydWeb host, check and update the SCRAPY_PROJECTS_DIR option in the config file.</h3>
+      <h3>在服务器目录中没有发现任何项目，请检查配置</h3>
       {% endif %}
       <div class="line-container">
-        <div class="key">folder</div>
+        <div class="key">项目目录</div>
         <div class="value" style="position: relative; padding: 0; cursor: {% if folders|length == 0 %}not-allowed{% else %}pointer{% endif %};">
           <input type="text" id="folder_selected" value="{{ latest_folder }}" hidden />
           <div onclick="handleDropdownProjects();" style="padding: 0 15px; height: 40px;">
@@ -167,45 +194,18 @@
       </div>
 
       <div class="line-container">
-        <div class="key"><span>*</span>project</div>
+        <div class="key"><span>*</span>项目名称</div>
         <div>
-          <input type="text" id="project_name" class="value readonly" readonly="readonly" placeholder="the project name" />
-          <div class="form-item-error">the project name is required</div>
+          <input type="text" id="project_name" class="value readonly" readonly="readonly" placeholder="项目名称（必填）" />
+          <div class="form-item-error">请输入项目名称</div>
         </div>
       </div>
 
       <div class="line-container">
-        <div class="key">version</div>
+        <div class="key">项目版本</div>
         <div>
-          <input type="text" id="modification_time" class="value readonly" readonly="readonly" placeholder="the project version" />
-          <div class="form-item-error">the project version is required</div>
-        </div>
-      </div>
-    </li>
-
-    <li id="content_upload">
-      <div class="line-container">
-        <div class="key">file</div>
-        <div>
-          <input type="text" id="filename" class="value readonly" readonly="readonly" placeholder="support file type: egg, zip, and tar.gz" />
-          <div class="form-item-error">select a file to upload</div>
-        </div>
-        <div id="filesize" class="key" style="padding-left: 12px; width: unset;"></div>
-      </div>
-
-      <div class="line-container">
-        <div class="key"><span>*</span>project</div>
-        <div>
-          <input type="text" id="project" class="value readonly" readonly="readonly" placeholder="the project name" />
-          <div class="form-item-error">the project name is required</div>
-        </div>
-      </div>
-
-      <div class="line-container">
-        <div class="key">version</div>
-        <div>
-          <input type="text" id="version" class="value readonly" readonly="readonly" placeholder="the project version" />
-          <div class="form-item-error">the project version is required</div>
+          <input type="text" id="modification_time" class="value readonly" readonly="readonly" placeholder="项目版本（必填）" />
+          <div class="form-item-error">请输入项目版本</div>
         </div>
       </div>
     </li>
@@ -221,9 +221,9 @@
     <label id="select-file-button" class="button warning big">
       <!-- macOS cannot select '.tar.gz' file if '.tar.gz' is added in accept -->
       <input type="file" id="file" name="file" accept=".egg, .zip, .gz" />
-      Select File
+      选择项目文件
     </label>
-    <a id="submit" class="button safe big" href="javascript:;" onclick="package();">Package & Deploy</a>
+    <a id="submit" class="button safe big" href="javascript:;" onclick="package();">打包并发布</a>
   </div>
 </div>
 
@@ -549,11 +549,11 @@ function switchButtons(active_tab) {
   if (active_tab == 'package') {
     my$('#select-file-button').style.display = 'none';
     my$('#submit').onclick = package;
-    my$('#submit').text = "Package & Deploy";
+    my$('#submit').text = "打包并发布";
   } else {
     my$('#select-file-button').style.display = 'block';
     my$('#submit').onclick = upload;
-    my$('#submit').text = "Upload & Deploy";
+    my$('#submit').text = "打包并发布";
   }
 }
 
