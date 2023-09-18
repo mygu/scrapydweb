@@ -339,7 +339,7 @@ def handle_template_context(app):
             static_js_stats=url_for(STATIC, filename='%s/js/stats.js' % VERSION),
             static_js_vue_min=url_for(STATIC, filename='%s/js/vue.min.js' % VERSION),
 
-            static_icon=url_for(STATIC, filename='%s/icon/fav.ico' % VERSION),
-            static_icon_shortcut=url_for(STATIC, filename='%s/icon/fav.ico' % VERSION),
-            static_icon_apple_touch=url_for(STATIC, filename='%s/icon/spiderman.png' % VERSION),
+            static_icon=url_for(STATIC, filename='%s/icon/favicon.ico' % VERSION),
+            static_icon_shortcut=url_for(STATIC, filename='%s/icon/favicon.ico' % VERSION),
+            static_icon_apple_touch=url_for(STATIC, filename='%s/icon/logo.png' % VERSION),
         )

@@ -4,7 +4,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block title %}{% endblock %} - ScrapydWeb</title>
+  <title>爬虫调度中心 - 合肥博耀信息技术有限公司</title>
 
   <link rel="stylesheet" type="text/css" href="{{ static_css_style }}">
   <!-- <script type="text/javascript" src="//at.alicdn.com/t/font_842334_vujk670yra.js"></script>  -->
@@ -133,14 +133,14 @@
 <main>
   <aside>
     <div>
-    <h3>Overview</h3>
+    <h3>总览</h3>
     <ul>
       <li>
         <a id="menu_servers" href="{{ g.url_menu_servers }}" onclick="showLoader();">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-servers"></use>
           </svg>
-          <span>Servers</span>
+          <span>服务器</span>
         </a>
       </li>
       <li>
@@ -148,20 +148,20 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-timer"></use>
           </svg>
-          <span>Timer Tasks</span>
+          <span>定时任务</span>
         </a>
       </li>
     </ul>
     </div>
     <div>
-    <h3>Dashboard</h3>
+    <h3>仪表盘</h3>
     <ul>
       <li>
         <a id="menu_jobs" href="{{ g.url_menu_jobs }}" onclick="showLoader();">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-jobs"></use>
           </svg>
-          <span>Jobs</span>
+          <span>项目作业</span>
         </a>
       </li>
       <li>
@@ -169,7 +169,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-report"></use>
           </svg>
-          <span>Node Reports</span>
+          <span>节点报告</span>
         </a>
       </li>
       {% if SCRAPYD_SERVERS_AMOUNT > 1 %}
@@ -178,21 +178,21 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-reports"></use>
           </svg>
-          <span>Cluster Reports</span>
+          <span>集群报告</span>
         </a>
       </li>
       {% endif %}
     </ul>
     </div>
     <div>
-    <h3>Operations</h3>
+    <h3>操作</h3>
     <ul>
       <li>
         <a id="menu_deploy" href="{{ g.url_menu_deploy }}" onclick="showLoader();">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-upload"></use>
           </svg>
-          <span>Deploy Project</span>
+          <span>部署项目</span>
         </a>
       </li>
       <li>
@@ -200,20 +200,20 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-run"></use>
           </svg>
-          <span>Run Spider</span>
+          <span>运行爬虫</span>
         </a>
       </li>
     </ul>
     </div>
     <div>
-    <h3>Files</h3>
+    <h3>文档</h3>
     <ul>
       <li>
         <a id="menu_projects" href="{{ g.url_menu_projects }}" onclick="showLoader();">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-projects"></use>
           </svg>
-          <span>Projects</span>
+          <span>项目</span>
         </a>
       </li>
       <li>
@@ -221,7 +221,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-logs"></use>
           </svg>
-          <span>Logs</span>
+          <span>日志</span>
         </a>
       </li>
     {% if SHOW_SCRAPYD_ITEMS %}
@@ -230,21 +230,21 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-items"></use>
           </svg>
-          <span>Items</span>
+          <span>数据项</span>
         </a>
       </li>
     {% endif %}
     </ul>
     </div>
     <div>
-    <h3>Utilities</h3>
+    <h3>实用工具</h3>
     <ul>
       <li>
         <a id="menu_sendtext" href="{{ g.url_menu_sendtext }}" onclick="showLoader();">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-send"></use>
           </svg>
-          <span>Send Text</span>
+          <span>发送信息</span>
         </a>
       </li>
       <li>
@@ -252,20 +252,20 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-parse"></use>
           </svg>
-          <span>Parse Log</span>
+          <span>解析日志</span>
         </a>
       </li>
     </ul>
     </div>
     <div>
-    <h3>System</h3>
+    <h3>系统管理</h3>
     <ul>
       <li>
         <a id="menu_settings" href="{{ g.url_menu_settings }}" onclick="showLoader();">
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-settings"></use>
           </svg>
-          <span>Settings</span>
+          <span>设置</span>
         </a>
       </li>
       <li>
@@ -273,7 +273,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-mobile"></use>
           </svg>
-          <span>Mobile UI</span>
+          <span>手机版</span>
         </a>
       </li>
       {% if ENABLE_AUTH %}
@@ -282,7 +282,7 @@
           <svg class="icon" aria-hidden="true">
             <use xlink:href="#icon-logout"></use>
           </svg>
-          <span>Logout</span>
+          <span>退出</span>
         </a>
       </li>
       {% endif %}
