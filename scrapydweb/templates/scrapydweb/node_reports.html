@@ -9,7 +9,7 @@
 
 {% block body %}
 <h2>
-  <a class="link" target="_blank" href="{{ url }}">Get the reports of running and finished jobs of all projects after Scrapyd server started.</a>
+  <a class="link" target="_blank" href="{{ url }}">获取服务器启动后所有项目正在运行和已完成的作业报告</a>
   <label title="schedule a spider run">
     <a class="button safe narrow" href="{{ url_schedule }}">+</a>
   </label>
@@ -20,7 +20,7 @@
 <div id="app">
 <template>
   <el-button-group>
-    <el-button type="primary" @click="fetchRemainingReports" icon="el-icon-download" size="medium">Fetch remaining reports</el-button>
+    <el-button type="primary" @click="fetchRemainingReports" icon="el-icon-download" size="medium">获取剩余报告</el-button>
     <!-- <el-button type="success" @click="fetchReports" icon="el-icon-download" size="medium">Fetch next 20 reports</el-button> -->
   </el-button-group>
 
@@ -29,7 +29,7 @@
     :data="tableData"
     style="width: 100%;"
     tooltip-effect="dark"
-    empty-text="There is nothing to display."
+    empty-text="没有可展示的数据"
     :max-height="maxHeight"
     highlight-current-row
 
@@ -40,13 +40,13 @@
     {% endif %}
   >
 
-    <el-table-column prop="index" label="Index" fixed sortable :sort-method="sortIndexFinish" :sort-orders="sortOrders" align="center" width="70">
+    <el-table-column prop="index" label="序号" fixed sortable :sort-method="sortIndexFinish" :sort-orders="sortOrders" align="center" width="70">
       <template slot-scope="scope">
         <p style="display: none;">{{scope.row.index0}} </p>
         <p>{{scope.row.index}}</p>
       </template>
     </el-table-column>
-    <el-table-column prop="stats" label="Stats" fixed sortable :sort-method="sortStatus" align="center" width="{% if SCRAPYD_SERVERS_AMOUNT > 1 %}120{% else %}100{% endif %}">
+    <el-table-column prop="stats" label="统计" fixed sortable :sort-method="sortStatus" align="center" width="{% if SCRAPYD_SERVERS_AMOUNT > 1 %}120{% else %}100{% endif %}">
       <template slot-scope="scope">
         <em :class="scope.row.loading_class"  v-bind:style="{display: scope.row.stats_loading_display}">{{scope.row.loading}}</em>
         {% if SCRAPYD_SERVERS_AMOUNT > 1 %}
@@ -56,18 +56,18 @@
       </template>
     </el-table-column>
 
-    <el-table-column prop="spider" label="Spider" fixed sortable align="center" width="150" show-overflow-tooltip></el-table-column>
-    <el-table-column prop="start" label="Start" sortable align="center" width="145"></el-table-column>
-    <el-table-column prop="runtime" label="Runtime" sortable :sort-method="sortRuntime" :sort-orders="sortOrders" align="center" width="125"></el-table-column>
+    <el-table-column prop="spider" label="爬虫" fixed sortable align="center" width="150" show-overflow-tooltip></el-table-column>
+    <el-table-column prop="start" label="开始时间" sortable align="center" width="145"></el-table-column>
+    <el-table-column prop="runtime" label="运行时长" sortable :sort-method="sortRuntime" :sort-orders="sortOrders" align="center" width="125"></el-table-column>
 
 {% include 'scrapydweb/include_reports_template_table.html' %}
 
-    <el-table-column prop="project" label="Project" sortable align="center" width="150" show-overflow-tooltip></el-table-column>
-    <el-table-column prop="spider" label="Spider" sortable align="center" width="150" show-overflow-tooltip></el-table-column>
-    <el-table-column prop="job" label="job" sortable align="center" width="250" show-overflow-tooltip></el-table-column>
-    <el-table-column prop="start" label="Start" sortable align="center" width="145"></el-table-column>
-    <el-table-column prop="runtime" label="Runtime" sortable :sort-method="sortRuntime" :sort-orders="sortOrders" align="center" width="125"></el-table-column>
-    <el-table-column prop="finish" label="Finish" sortable align="center" width="145"></el-table-column>
+    <el-table-column prop="project" label="项目" sortable align="center" width="150" show-overflow-tooltip></el-table-column>
+    <el-table-column prop="spider" label="爬虫" sortable align="center" width="150" show-overflow-tooltip></el-table-column>
+    <el-table-column prop="job" label="作业" sortable align="center" width="250" show-overflow-tooltip></el-table-column>
+    <el-table-column prop="start" label="开始时间" sortable align="center" width="145"></el-table-column>
+    <el-table-column prop="runtime" label="运行时长" sortable :sort-method="sortRuntime" :sort-orders="sortOrders" align="center" width="125"></el-table-column>
+    <el-table-column prop="finish" label="完成时间" sortable align="center" width="145"></el-table-column>
   </el-table>
 </template>
 </div>
