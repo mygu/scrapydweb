@@ -29,11 +29,11 @@
 {% endif %}
 
 <h2>
-  <a class="link" target="_blank" href="{{ url }}">Get the list of jobs of all projects in database.</a>
-  <label title="switch to non-database view">
-    <a class="button normal" href="{{ url_jobs_classic }}">Classic</a>
-  </label>
-  <label title="schedule a spider run">
+  <a class="link" target="_blank" href="{{ url }}">获取所有项目的作业列表</a>
+{#  <label title="切换到非数据库视图">#}
+{#    <a class="button normal" href="{{ url_jobs_classic }}">Classic</a>#}
+{#  </label>#}
+  <label title="调度一个爬虫运行">
     <a class="button safe narrow" href="{{ url_schedule }}">+</a>
   </label>
   <span id="logparser_last_update" style="color: #67c23a;"></span>
@@ -58,37 +58,37 @@
     <!-- / — / medium / small / mini -->
     <!-- :default-sort="{prop: 'runtime', order: 'descending'}" -->
 
-    <el-table-column prop="index" label="Index" fixed sortable align="center" width="70"></el-table-column>
+    <el-table-column prop="index" label="序号" fixed sortable align="center" width="70"></el-table-column>
     <!-- 'abcdefghi0abcdefghi0' -->
-    <el-table-column prop="project" label="Project" fixed sortable show-overflow-tooltip align="center" width="150">
+    <el-table-column prop="project" label="项目" fixed sortable show-overflow-tooltip align="center" width="150">
       <template slot-scope="scope"><span :style="{ color: scope.row.pending_color }">{{scope.row.project}}</span></template>
     </el-table-column>
-    <el-table-column prop="spider" label="Spider" fixed sortable show-overflow-tooltip align="center" width="150">
+    <el-table-column prop="spider" label="爬虫" fixed sortable show-overflow-tooltip align="center" width="150">
       <template slot-scope="scope"><span :style="{ color: scope.row.pending_color }">{{scope.row.spider}}</span></template>
     </el-table-column>
     <!-- 'task_123456_2019-01-01T00_00_01' -->
-    <el-table-column prop="job" label="Job" fixed sortable show-overflow-tooltip :sort-method="sortJobWithTask" :sort-orders="sortOrders" align="center" width="215">
+    <el-table-column prop="job" label="作业" fixed sortable show-overflow-tooltip :sort-method="sortJobWithTask" :sort-orders="sortOrders" align="center" width="215">
       <template slot-scope="scope"><span :style="{ color: scope.row.pending_color }">{{scope.row.job}}</span></template>
     </el-table-column>
-    <el-table-column prop="pages" label="Pages" fixed sortable :sort-method="sortPages" :sort-orders="sortOrders" align="center" width="80">
+    <el-table-column prop="pages" label="页面" fixed sortable :sort-method="sortPages" :sort-orders="sortOrders" align="center" width="80">
       <template slot-scope="scope"><span :class="scope.row.pages_class">{{scope.row.pages}}</span></template>
     </el-table-column>
-    <el-table-column prop="items" label="Items" fixed sortable :sort-method="sortItems" :sort-orders="sortOrders" align="center" width="80">
+    <el-table-column prop="items" label="数据项" fixed sortable :sort-method="sortItems" :sort-orders="sortOrders" align="center" width="80">
       <template slot-scope="scope"><span :class="scope.row.items_class">{{scope.row.items}}</span></template>
     </el-table-column>
 
-    <el-table-column prop="stats" label="Stats" sortable align="center" width="{% if SCRAPYD_SERVERS_AMOUNT > 1 %}105{% else %}65{% endif %}" :sort-method="sortByIndex">
+    <el-table-column prop="stats" label="统计" sortable align="center" width="{% if SCRAPYD_SERVERS_AMOUNT > 1 %}105{% else %}65{% endif %}" :sort-method="sortByIndex">
       <template slot-scope="scope">
         {% if SCRAPYD_SERVERS_AMOUNT > 1 %}
         <a class="state multinode" :style="{ display: scope.row.pending_display }" :href="scope.row.url_clusterreports">{{ g.multinode|safe }}</a>
         {% endif %}
-        <a :class="scope.row.stats_class" :style="{ display: scope.row.pending_display }" :href="scope.row.url_stats" target="_blank">Stats</a>
+        <a :class="scope.row.stats_class" :style="{ display: scope.row.pending_display }" :href="scope.row.url_stats" target="_blank">统计</a>
       </template>
     </el-table-column>
 
-    <el-table-column prop="action" label="Action" sortable align="center" width="{% if SCRAPYD_SERVERS_AMOUNT > 1 %}115{% else %}90{% endif %}" :sort-method="sortByIndex">
+    <el-table-column prop="action" label="操作" sortable align="center" width="{% if SCRAPYD_SERVERS_AMOUNT > 1 %}115{% else %}90{% endif %}" :sort-method="sortByIndex">
       <template slot-scope="scope">
-        <span style="color: red;" :style="{ display: scope.row.display_kill }">Kill {{scope.row.pid}}</span>
+        <span style="color: red;" :style="{ display: scope.row.display_kill }">停止：{{scope.row.pid}}</span>
         {% if SCRAPYD_SERVERS_AMOUNT > 1 %}
         <a class="state multinode" :style="{ display: scope.row.display_action }" :href="scope.row.url_multinode">{{ g.multinode|safe }}</a>
         {% endif %}
@@ -96,25 +96,25 @@
       </template>
     </el-table-column>
 
-    <el-table-column prop="start" label="Start" sortable :sort-method="sortStart" :sort-orders="sortOrders" align="center" width="145"></el-table-column>
+    <el-table-column prop="start" label="开始时间" sortable :sort-method="sortStart" :sort-orders="sortOrders" align="center" width="145"></el-table-column>
     <!-- 16 days, 20:09:24 -->
-    <el-table-column prop="runtime" label="Runtime" sortable :sort-method="sortRuntime" :sort-orders="sortOrders" align="center" width="125"></el-table-column>
-    <el-table-column prop="finish" label="Finish" sortable :sort-orders="sortOrders" align="center" width="145"></el-table-column>
-    <el-table-column prop="update_time" label="Update time" sortable :sort-orders="sortOrders" align="center" width="145"></el-table-column>
-    <el-table-column prop="pid" label="PID" sortable :sort-method="sortPID" :sort-orders="sortOrders" align="center" width="70">
+    <el-table-column prop="runtime" label="运行时长" sortable :sort-method="sortRuntime" :sort-orders="sortOrders" align="center" width="125"></el-table-column>
+    <el-table-column prop="finish" label="完成时间" sortable :sort-orders="sortOrders" align="center" width="145"></el-table-column>
+    <el-table-column prop="update_time" label="更新时间" sortable :sort-orders="sortOrders" align="center" width="145"></el-table-column>
+    <el-table-column prop="pid" label="父ID" sortable :sort-method="sortPID" :sort-orders="sortOrders" align="center" width="70">
       <template slot-scope="scope"><span :style="{ color: scope.row.pid_color }">{{scope.row.pid}}</span></template>
     </el-table-column>
 
-    <el-table-column prop="links" label="Links" sortable align="center" width="195" :sort-method="sortByIndex">
+    <el-table-column prop="links" label="链接" sortable align="center" width="195" :sort-method="sortByIndex">
       <template slot-scope="scope">
-        <a :class="scope.row.stats_class" :style="{ display: scope.row.pending_display }" :href="scope.row.url_utf8" target="_blank">Log</a>
-        <a :class="scope.row.stats_class" :style="{ display: scope.row.pending_display }" :href="scope.row.url_source" target="_blank">Source</a>
-        <a :class="scope.row.stats_class" :style="{ display: scope.row.items_display }" :href="scope.row.url_items" target="_blank">Items</a>
+        <a :class="scope.row.stats_class" :style="{ display: scope.row.pending_display }" :href="scope.row.url_utf8" target="_blank">日志</a>
+        <a :class="scope.row.stats_class" :style="{ display: scope.row.pending_display }" :href="scope.row.url_source" target="_blank">来源</a>
+        <a :class="scope.row.stats_class" :style="{ display: scope.row.items_display }" :href="scope.row.url_items" target="_blank">数据项</a>
       </template>
     </el-table-column>
-    <el-table-column prop="delete" label="Delete" sortable align="center" width="90" :sort-method="sortByIndex">
+    <el-table-column prop="delete" label="删除" sortable align="center" width="90" :sort-method="sortByIndex">
       <!-- <template slot-scope="scope"><a class="state danger" :href="scope.row.url_delete" target="_blank">Delete</a></template> -->
-      <template slot-scope="scope"><a class="state delete" @click="deleteRow(scope.$index, tableData)">Delete</a></template>
+      <template slot-scope="scope"><a class="state delete" @click="deleteRow(scope.$index, tableData)">删除</a></template>
     </el-table-column>
   </el-table>
 
@@ -187,7 +187,7 @@ var Main = {
         url_items: '{{ job.url_items }}',
         items_display: {% if SHOW_SCRAPYD_ITEMS and job.url_items %}''{% else %}'none'{% endif %},
 
-        action: {% if job.finish %}'Start'{% elif job.pid %}'Stop'{% else %}'Cancel'{% endif %},
+        action: {% if job.finish %}'执行'{% elif job.pid %}'停止'{% else %}'取消'{% endif %},
         action_class: {% if job.finish %}'state safe'{% elif job.pid %}'state danger'{% else %}'state warning'{% endif %},
         url_action: '{{ job.url_action }}',
         url_multinode: '{{ job.url_multinode }}',
@@ -317,13 +317,13 @@ var Main = {
                 }
               }
 
-              my$('#logparser_stats').style.display = 'block';  // flash in base.html
+              my$('#logparser_stats').style.display = 'none';  // flash in base.html
               my$('#logparser_stats').innerText = "LogParser v" + obj.logparser_version + ", last updated at " + obj.last_update_time + ", {{ url_liststats_source }}";
-              my$('#logparser_last_update').innerText = "by LogParser: " + Math.ceil(Date.now() / 1000 - obj.last_update_timestamp) + " secs ago";
+              my$('#logparser_last_update').innerText = "数据来源：" + Math.ceil(Date.now() / 1000 - obj.last_update_timestamp) + " 秒前";
               setInterval(function() {
                 var now_timestamp = Date.now() / 1000;
                 var seconds = Math.ceil(Date.now() / 1000 - obj.last_update_timestamp);
-                my$('#logparser_last_update').innerHTML = "by LogParser: " + "<span style='color: red;'>" + seconds + "</span> secs ago";
+                my$('#logparser_last_update').innerHTML = "数据来源：" + "<span style='color: red;'>" + seconds + "</span> 秒前";
               }, 1000);
 
               // Update Jobs database
