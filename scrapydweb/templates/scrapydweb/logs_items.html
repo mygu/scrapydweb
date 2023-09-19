@@ -11,25 +11,23 @@
 {% block body %}
 <h2>
   <a class="link" target="_blank" href="{{ url }}">
-  Directory listing for /{{ title }}/{% if project %}{{ project }}/{% endif %}{% if spider %}{{ spider }}/{% endif %}
+  监听目录： /{{ title }}/{% if project %}{{ project }}/{% endif %}{% if spider %}{{ spider }}/{% endif %}
   </a>
 </h2>
 
 <div id="app">
 <template>
-  <el-col :span="5">
     <el-button-group>
-      <el-button type="primary" onclick="window.history.back();" icon="el-icon-arrow-left" size="medium">Back</el-button>
-      <el-button type="primary" onclick="window.history.forward();" size="medium">Forward<i class="el-icon-arrow-right el-icon--right"></i></el-button>
+      <el-button type="primary" onclick="window.history.back();" icon="el-icon-arrow-left" size="medium">返回</el-button>
+      <el-button type="primary" onclick="window.history.forward();" size="medium">向前<i class="el-icon-arrow-right el-icon--right"></i></el-button>
     </el-button-group>
-  </el-col>
 
 {% if project and spider and rows %}
   <el-button-group>
     {% if SCRAPYD_SERVERS_AMOUNT > 1 %}
     <el-button type="success" onclick="window.location='{{ url_multinode_run }}';" size="small">{{ g.multinode|safe }}</el-button>
     {% endif %}
-    <el-button type="success" onclick="window.location='{{ url_schedule }}';" size="medium">Run Spider ({{ spider }})</el-button>
+    <el-button type="success" onclick="window.location='{{ url_schedule }}';" size="medium">运行爬虫 ({{ spider }})</el-button>
   </el-button-group>
 {% endif %}
 
@@ -39,32 +37,32 @@
     tooltip-effect="dark"
     empty-text="没有可展示的数据"
     :max-height="maxHeight"
-    style="width: 100%;"
+    style="width: 100%;margin-top: 10px;"
     :size="size"
     :default-sort="{prop: 'content_type', order: 'ascending'}"
   >
 
-    <el-table-column prop="index" label="Index" sortable width="70" align="center"></el-table-column>
+    <el-table-column prop="index" label="序号" sortable width="70" align="center"></el-table-column>
     <!-- stats.json.bak [application/x-trash] -->
-    <el-table-column prop="content_type" label="Content type" sortable width="135" align="center"></el-table-column>
-    <el-table-column prop="content_encoding" label="Encoding" sortable width="95" align="center"></el-table-column>
-    <el-table-column prop="size" label="Size" sortable width="100" align="center" :sort-method="sortSize" :sort-orders=['descending','ascending',null]></el-table-column>
+    <el-table-column prop="content_type" label="内容类型" sortable width="135" align="center"></el-table-column>
+    <el-table-column prop="content_encoding" label="编码" sortable width="95" align="center"></el-table-column>
+    <el-table-column prop="size" label="大小" sortable width="100" align="center" :sort-method="sortSize" :sort-orders=['descending','ascending',null]></el-table-column>
 
     {% if project and spider %}
-    <el-table-column prop="stats" label="Stats" sortable width="{% if SCRAPYD_SERVERS_AMOUNT > 1 %}105{% else %}65{% endif %}" align="center">
+    <el-table-column prop="stats" label="统计" sortable width="{% if SCRAPYD_SERVERS_AMOUNT > 1 %}105{% else %}65{% endif %}" align="center">
       <template slot-scope="scope">
         {% if SCRAPYD_SERVERS_AMOUNT > 1 %}
         <a class="state multinode" :href="scope.row.url_clusterreports" target="_blank">{{ g.multinode|safe }}</a>
         {% endif %}
-        <a :class="scope.row.stats_class" :href="scope.row.url_stats" target="_blank">Stats</a>
+        <a :class="scope.row.stats_class" :href="scope.row.url_stats" target="_blank">统计</a>
       </template>
     </el-table-column>
-    <el-table-column prop="log" label="Log" sortable width="60" align="center">
+    <el-table-column prop="log" label="日志" sortable width="60" align="center">
       <template slot-scope="scope"><a class="state normal" :style="{ display: scope.row.display }" :href="scope.row.url_utf8" target="_blank">{{scope.row.log}}</a></template>
     </el-table-column>
     {% endif %}
 
-    <el-table-column prop="filename" label="Filename" sortable min-width="90" align="left" show-overflow-tooltip>
+    <el-table-column prop="filename" label="文件名" sortable min-width="90" align="left" show-overflow-tooltip>
       <template slot-scope="scope"><a class="link" :href="scope.row.href" :target="scope.row.target">{{scope.row.filename}}</a></template>
     </el-table-column>
 
@@ -93,7 +91,7 @@ var Main = {
         url_stats: '{{ row["url_stats"] }}',
         stats_class: {% if row['url_utf8'] %}'state normal'{% else %}'state warning'{% endif %},
         url_utf8: '{{ row["url_utf8"] }}',
-        log: {% if row['url_utf8'] %}'Log'{% else %}''{% endif %},
+        log: {% if row['url_utf8'] %}'日志'{% else %}''{% endif %},
         display: {% if row['url_utf8'] %}''{% else %}'none'{% endif %},
         {% endif %}
 
