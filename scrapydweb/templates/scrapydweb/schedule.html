@@ -59,17 +59,17 @@
 {% block body %}
 <div>
   <h2 style="display: inline-block;">
-    <a class="link" target="_blank" href="{{ url }}">Schedule a spider run (also known as a job), returning the job id.</a>
+    <a class="link" target="_blank" href="{{ url }}">调度爬虫运行，返回作业ID</a>
   </h2>
-  <label title="deploy a project or add a version">
+  <label title="部署项目或添加版本">
     <a class="button safe narrow" href="{{ url_deploy }}">+</a>
   </label>
-  <label title="check out the history of running spiders">
-    <a class="link" target="_blank" href="{{ url_schedule_history }}">history</a>
+  <label title="检查爬虫历史运行记录">
+    <a class="link" target="_blank" href="{{ url_schedule_history }}">历史记录</a>
   </label>
 </div>
 
-<div class="wrap collapse-wrap">
+<div class="wrap collapse-wrap" style="display: none;">
   <ul class="collapse">
     <li>
       <div class="title">
@@ -119,45 +119,45 @@ print(get_localzone())</pre>
   <div id="app">
     <el-form id="form" :rules="rules" ref="form" :model="form" label-width="200px">
 
-      <el-form-item label="Scrapyd server">
+      <el-form-item label="服务器">
         <el-select id="node" v-model="form.selectedSCRAPYD_SERVER" placeholder="Select a node" @change="loadSCRAPYD_SERVERS">
           <el-option v-for="SCRAPYD_SERVER in SCRAPYD_SERVERS" :key="SCRAPYD_SERVER" :label="SCRAPYD_SERVER" :value="SCRAPYD_SERVER"></el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label="project" prop="selectedProject">
-        <el-select id="projects" v-model="form.selectedProject" placeholder="Select a project" @visible-change="loadProjects" @change="loadVersions" no-data-text="No projects found">
+      <el-form-item label="项目" prop="selectedProject">
+        <el-select id="projects" v-model="form.selectedProject" placeholder="选择一个项目" @visible-change="loadProjects" @change="loadVersions" no-data-text="No projects found">
           <el-option v-for="project in projects" :key="project" :label="project" :value="project"></el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label="_version" prop="selectedVersion">
-        <el-select id="versions" v-model="form.selectedVersion" placeholder="Select a version" no-data-text="Select a project first..." @change="loadSpiders">
+      <el-form-item label="版本" prop="selectedVersion">
+        <el-select id="versions" v-model="form.selectedVersion" placeholder="选择一个版本" no-data-text="请先选择项目" @change="loadSpiders">
           <el-option v-for="version in versions" :key="version" :label="version" :value="version"></el-option>
         </el-select>
       </el-form-item>
 
-      <el-form-item label="spider" prop="selectedSpider">
-        <el-select id="spiders" v-model="form.selectedSpider" placeholder="Select a spider" no-data-text="Select a version first...">
+      <el-form-item label="爬虫" prop="selectedSpider">
+        <el-select id="spiders" v-model="form.selectedSpider" placeholder="选择一个爬虫" no-data-text="请先选择版本">
           <el-option v-for="spider in spiders" :key="spider" :label="spider" :value="spider"></el-option>
         </el-select>
       </el-form-item>
 
 
-      <el-form-item label="settings & arguments">
+      <el-form-item label="设置/参数">
         <el-switch v-model="form.expandSettingsArguments"></el-switch>
       </el-form-item>
 
       <div id="settings_arguments" v-show="form.expandSettingsArguments">
-        <el-form-item label="jobid">
+        <el-form-item label="作业ID">
           <el-col :span="9">
-            <el-input v-model="form.jobid" placeholder="The job id used to identify the job" clearable></el-input>
+            <el-input v-model="form.jobid" placeholder="用于作业标识生成" clearable></el-input>
           </el-col>
         </el-form-item>
 
-        <el-form-item label="USER_AGENT">
+        <el-form-item label="用户代理">
           <el-col :span="9">
-            <el-select v-model="form.USER_AGENT" placeholder="The default User-Agent for crawling" clearable>
+            <el-select v-model="form.USER_AGENT" placeholder="设置默认的用户代理（User-Agent）" clearable>
               <el-option :label="form.CUSTOM_USER_AGENT" value="custom"></el-option>
               <el-option label="Mozilla/5.0 Windows NT Chrome..." value="Chrome"></el-option>
               <el-option label="Mozilla/5.0 iPhone Safari..." value="iPhone"></el-option>
@@ -167,37 +167,37 @@ print(get_localzone())</pre>
           </el-col>
         </el-form-item>
 
-        <el-form-item label="ROBOTSTXT_OBEY">
+        <el-form-item label="遵守Robots协议">
           <el-col :span="9">
-            <el-select v-model="form.ROBOTSTXT_OBEY" placeholder="Whether to respect robots.txt policies" clearable>
+            <el-select v-model="form.ROBOTSTXT_OBEY" placeholder="是否遵守robots.txt协议" clearable>
               <el-option label="True" value="True"></el-option>
               <el-option label="False" value="False"></el-option>
             </el-select>
           </el-col>
         </el-form-item>
 
-        <el-form-item label="COOKIES_ENABLED">
+        <el-form-item label="启用Cookies">
           <el-col :span="9">
-            <el-select v-model="form.COOKIES_ENABLED" placeholder="Whether to enable cookies middleware" clearable>
+            <el-select v-model="form.COOKIES_ENABLED" placeholder="是否启用Cookies" clearable>
               <el-option label="True" value="True"></el-option>
               <el-option label="False" value="False"></el-option>
             </el-select>
           </el-col>
         </el-form-item>
 
-        <el-form-item label="CONCURRENT_REQUESTS">
+        <el-form-item label="并发请求">
           <el-col :span="9">
-            <el-input v-model="form.CONCURRENT_REQUESTS" placeholder="Defaults to 16 in Scrapy" clearable></el-input>
+            <el-input v-model="form.CONCURRENT_REQUESTS" placeholder="设置请求并发数量（默认：16）" clearable></el-input>
           </el-col>
         </el-form-item>
 
-        <el-form-item label="DOWNLOAD_DELAY">
+        <el-form-item label="下载延迟">
           <el-col :span="9">
-            <el-input v-model="form.DOWNLOAD_DELAY" placeholder="Defaults to 0 in Scrapy" clearable></el-input>
+            <el-input v-model="form.DOWNLOAD_DELAY" placeholder="设置下载延迟（默认：0）" clearable></el-input>
           </el-col>
         </el-form-item>
 
-        <el-form-item label="additional">
+        <el-form-item label="自定义参数">
           <el-col :span="9">
             <el-input type="textarea" v-model="form.additional" :autosize="{ minRows: 4, maxRows: 10}" placeholder="-d setting=CLOSESPIDER_ITEMCOUNT=1 -d arg1=val1" clearable></el-input>
           </el-col>
@@ -205,38 +205,38 @@ print(get_localzone())</pre>
       </div>
 
 
-      <el-form-item label="timer task">
+      <el-form-item label="定时任务">
         <el-switch v-model="form.expandTimerTask" @change='timerTaskSwitch' active-color="#67c23a"></el-switch>
       </el-form-item>
 
       <div id="time_task" v-show="form.expandTimerTask">
         {% if task_id %}
-        <el-form-item class="main_settings" label="target">
+        <el-form-item class="main_settings" label="目标">
           <el-col :span="9">
             <el-select v-model="form.replace_existing" @change='timerTaskReplaceExisting'>
-              <el-option :label="`Update task #` + form.task_id" value="True"></el-option>
-              <el-option label="Save as a new task" value="False"></el-option>
+              <el-option :label="`更新任务 #` + form.task_id" value="True"></el-option>
+              <el-option label="保存为一个新任务" value="False"></el-option>
             </el-select>
           </el-col>
         </el-form-item>
         {% endif %}
 
-        <el-form-item class="main_settings" label="action">
+        <el-form-item class="main_settings" label="操作">
           <el-col :span="9">
             <el-select v-model="form.action" @change='timerTaskAction'>
-              <el-option label="Add Task" value="add"></el-option>
-              <el-option label="Add Task & Fire Right Now" value="add_fire"></el-option>
-              <el-option label="Add Task & Pause It" value="add_pause"></el-option>
+              <el-option label="添加任务" value="add"></el-option>
+              <el-option label="添加任务并立即执行" value="add_fire"></el-option>
+              <el-option label="添加任务但暂不执行" value="add_pause"></el-option>
             </el-select>
           </el-col>
         </el-form-item>
-        <el-form-item  class="main_settings" label="name">
+        <el-form-item  class="main_settings" label="名称">
           <el-col :span="9">
-            <el-input v-model="form.name" placeholder="Textual description of the task (optional)" clearable></el-input>
+            <el-input v-model="form.name" placeholder="定时任务的名称或描述（可选）" clearable></el-input>
           </el-col>
         </el-form-item>
 
-        <el-form-item label="year" v-show="form.expandTimerTaskMoreSettings">
+        <el-form-item label="年" v-show="form.expandTimerTaskMoreSettings">
           <el-col :span="9">
             <el-input v-model="form.year" placeholder="4-digit year, e.g. 2019; Defaults to * for any year" clearable></el-input>
           </el-col>
@@ -245,7 +245,7 @@ print(get_localzone())</pre>
             <i class="el-icon-question"></i>
           </el-tooltip>
         </el-form-item>
-        <el-form-item label="month" v-show="form.expandTimerTaskMoreSettings">
+        <el-form-item label="月" v-show="form.expandTimerTaskMoreSettings">
           <el-col :span="9">
             <el-input v-model="form.month" placeholder="1-12; Defaults to * for any month" clearable></el-input>
           </el-col>
@@ -254,7 +254,7 @@ print(get_localzone())</pre>
             <i class="el-icon-question"></i>
           </el-tooltip>
         </el-form-item>
-        <el-form-item class="main_settings" label="day">
+        <el-form-item class="main_settings" label="日">
           <el-col :span="9">
             <el-input v-model="form.day" placeholder="1-31; Defaults to * for any day" clearable></el-input>
           </el-col>
@@ -263,7 +263,7 @@ print(get_localzone())</pre>
             <i class="el-icon-question"></i>
           </el-tooltip>
         </el-form-item>
-        <el-form-item label="week" v-show="form.expandTimerTaskMoreSettings">
+        <el-form-item label="周" v-show="form.expandTimerTaskMoreSettings">
           <el-col :span="9">
             <el-input v-model="form.week" placeholder="1-53; Defaults to * for any week" clearable></el-input>
           </el-col>
@@ -277,7 +277,7 @@ print(get_localzone())</pre>
             <!-- <el-input v-model="form.day_of_week" placeholder="0-6 or mon,tue,wed,thu,fri,sat,sun; Use mon-fri for all workdays" clearable></el-input> -->
           <!-- </el-col> -->
         <!-- </el-form-item> -->
-        <el-form-item class="main_settings" label="day_of_week">
+        <el-form-item class="main_settings" label="周几">
           <el-col :span="9">
             <el-select v-model="form.day_of_week" placeholder="multiple select or leave blank for *" multiple>
               <el-option
@@ -289,7 +289,7 @@ print(get_localzone())</pre>
             </el-select>
           </el-col>
         </el-form-item>
-        <el-form-item class="main_settings" label="hour">
+        <el-form-item class="main_settings" label="小时">
           <el-col :span="9">
             <el-input v-model="form.hour" placeholder="0-23; Defaults to * for any hour" clearable></el-input>
           </el-col>
@@ -298,7 +298,7 @@ print(get_localzone())</pre>
             <i class="el-icon-question"></i>
           </el-tooltip>
         </el-form-item>
-        <el-form-item class="main_settings" label="minute">
+        <el-form-item class="main_settings" label="分钟">
           <el-col :span="9">
             <el-input v-model="form.minute" placeholder="0-59; Defaults to 0 instead of *" clearable></el-input>
           </el-col>
@@ -307,7 +307,7 @@ print(get_localzone())</pre>
             <i class="el-icon-question"></i>
           </el-tooltip>
         </el-form-item>
-        <el-form-item label="second" v-show="form.expandTimerTaskMoreSettings">
+        <el-form-item label="秒" v-show="form.expandTimerTaskMoreSettings">
           <el-col :span="9">
             <el-input v-model="form.second" placeholder="0-59; Defaults to 0 instead of *; Caution with value *" clearable></el-input>
           </el-col>
@@ -317,17 +317,17 @@ print(get_localzone())</pre>
           </el-tooltip>
         </el-form-item>
 
-        <el-form-item label="start_date" v-show="form.expandTimerTaskMoreSettings">
+        <el-form-item label="开始时间" v-show="form.expandTimerTaskMoreSettings">
           <el-date-picker
-            v-model="form.start_date" type="datetime" placeholder="optional (inclusive)" default-time="12:00:00" value-format="yyyy-MM-dd HH:mm:ss">
+            v-model="form.start_date" type="datetime" placeholder="可选（包含）" default-time="12:00:00" value-format="yyyy-MM-dd HH:mm:ss">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="end_date" v-show="form.expandTimerTaskMoreSettings">
+        <el-form-item label="结束时间" v-show="form.expandTimerTaskMoreSettings">
           <el-date-picker
-            v-model="form.end_date" type="datetime" placeholder="optional (inclusive)" default-time="12:00:00" value-format="yyyy-MM-dd HH:mm:ss">
+            v-model="form.end_date" type="datetime" placeholder="可选（包含）" default-time="12:00:00" value-format="yyyy-MM-dd HH:mm:ss">
           </el-date-picker>
         </el-form-item>
-        <el-form-item label="timezone" v-show="form.expandTimerTaskMoreSettings">
+        <el-form-item label="时区" v-show="form.expandTimerTaskMoreSettings">
           <el-col :span="9">
             <el-input v-model="form.timezone" :placeholder="`Defaults to ` + form._timezone" clearable></el-input>
           </el-col>
@@ -336,9 +336,9 @@ print(get_localzone())</pre>
             <i class="el-icon-question"></i>
           </el-tooltip>
         </el-form-item>
-        <el-form-item label="jitter" v-show="form.expandTimerTaskMoreSettings">
+        <el-form-item label="随机延迟" v-show="form.expandTimerTaskMoreSettings">
           <el-col :span="9">
-            <el-input v-model="form.jitter" placeholder="Execute task by random delay of [-N, +N] secs; Defaults to 0" clearable></el-input>
+            <el-input v-model="form.jitter" placeholder="设置执行任务[-N, +N]秒的随机延迟（默认：0）" clearable></el-input>
           </el-col>
           <el-tooltip class="put-off" placement="right">
             <div slot="content">Execute task by random delay of [-N, +N] secs;<br/>Defaults to 0;<br/>Search 'jitter' in apscheduler.readthedocs.io/en/latest/modules/triggers/cron.html</div>
@@ -346,16 +346,16 @@ print(get_localzone())</pre>
           </el-tooltip>
         </el-form-item>
 
-        <el-form-item label="misfire_grace_time" v-show="form.expandTimerTaskMoreSettings">
+        <el-form-item label="失败延迟容忍" v-show="form.expandTimerTaskMoreSettings">
           <el-col :span="9">
-            <el-input v-model="form.misfire_grace_time" placeholder="Max tolerance of delay for misfired task; Defaults to 600 secs" clearable></el-input>
+            <el-input v-model="form.misfire_grace_time" placeholder="失败任务的最大延迟容忍（默认：600秒）" clearable></el-input>
           </el-col>
           <el-tooltip class="put-off" placement="right">
             <div slot="content">Max tolerance of delay for misfired task;<br/>Defaults to 600 secs;<br/>See apscheduler.readthedocs.io/en/latest/userguide.html#missed-job-executions-and-coalescing</div>
             <i class="el-icon-question"></i>
           </el-tooltip>
         </el-form-item>
-        <el-form-item label="coalesce" v-show="form.expandTimerTaskMoreSettings">
+        <el-form-item label="合并" v-show="form.expandTimerTaskMoreSettings">
           <el-col :span="9">
             <el-select v-model="form.coalesce">
               <el-option label="True: default, recommended" value="True"></el-option>
@@ -363,7 +363,7 @@ print(get_localzone())</pre>
             </el-select>
           </el-col>
         </el-form-item>
-        <el-form-item label="max_instances" v-show="form.expandTimerTaskMoreSettings">
+        <el-form-item label="最大实例数" v-show="form.expandTimerTaskMoreSettings">
           <el-col :span="9">
             <el-input v-model="form.max_instances" placeholder="Max concurrently running instances of this task; Defaults to 1" clearable></el-input>
           </el-col>
@@ -373,15 +373,15 @@ print(get_localzone())</pre>
           </el-tooltip>
         </el-form-item>
 
-        <el-form-item class="main_settings" label="show more timer settings">
+        <el-form-item class="main_settings" label="显示更多设置">
           <el-switch v-model="form.expandTimerTaskMoreSettings" active-color="#feb324"></el-switch>
         </el-form-item>
       </div>
 
 
-      <el-form-item label="curl command" prop="cmd">
+      <el-form-item label="执行命令" prop="cmd">
         <el-col :span="9">
-           <el-input id="cmd" type="textarea" v-model="form.cmd" :autosize="{ minRows: 7, maxRows: 10}" readonly="readonly" placeholder="Click the 'Check CMD' button below to preview"></el-input>
+           <el-input id="cmd" type="textarea" v-model="form.cmd" :autosize="{ minRows: 7, maxRows: 10}" readonly="readonly" placeholder="点击下面的”检查执行命令“按钮进行预览"></el-input>
         </el-col>
       </el-form-item>
 
@@ -397,8 +397,8 @@ print(get_localzone())</pre>
     </form>
 
     <div style="margin: 34px 0 16px 200px;">
-      <a class="button warning big" href="javascript:;" onclick="vm.checkCMD('form');">Check CMD</a>
-      <a id="run_spider" class="button safe big" href="javascript:;" onclick="runSpider('form');">Run Spider</a>
+      <a class="button warning big" href="javascript:;" onclick="vm.checkCMD('form');">检查执行命令</a>
+      <a id="run_spider" class="button safe big" href="javascript:;" onclick="runSpider('form');">运行爬虫</a>
     </div>
   </div>
 </div>
@@ -591,9 +591,9 @@ var Main = {
       },
 
       timer_task_action_label_dict: {
-        'add': 'Add Task',
-        'add_fire': 'Add Task & Fire Right Now',
-        'add_pause': 'Add Task & Pause It',
+        'add': '添加任务',
+        'add_fire': '添加任务并立即执行',
+        'add_pause': '添加任务但暂不执行',
       }
     };
   },
@@ -650,9 +650,9 @@ var Main = {
     timerTaskAction(callback) {
       if (this.form.task_id) {
         if (this.form.replace_existing == 'True') {
-          var update_or_new = 'update';
+          var update_or_new = '更新';
         } else {
-          var update_or_new = 'new';
+          var update_or_new = '新';
         }
         my$('#run_spider').text = "[" + update_or_new + "] "+ this.timer_task_action_label_dict[callback];
       } else {
