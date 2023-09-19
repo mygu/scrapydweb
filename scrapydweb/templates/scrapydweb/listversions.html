@@ -5,17 +5,17 @@
     {% endif %}
 
     <a class="button danger" href="javascript:;" onclick="execXHR('{{ url_delproject }}', 'versions_of_{{ project }}');">
-      Delete Project
+      删除项目
     </a>
   </div>
 
   <table>
     <thead>
       <tr>
-        <th>Version</th>
-        <th>List Spiders</th>
-        <th>Run Spider</th>
-        <th>Delete Version</th>
+        <th>版本</th>
+        <th>列表</th>
+        <th>运行</th>
+        <th>删除</th>
       </tr>
     </thead>
     <tbody>
@@ -25,7 +25,7 @@
         <td>
           <a class="state normal" href="javascript:;"
           onclick="execXHR('{{ url_listspiders }}', 'listspiders{{ project + version }}');">
-          List Spiders
+          爬虫列表
           </a>
         </td>
         <td id="listspiders{{ project + version }}" class="spiders"></td>
@@ -41,7 +41,7 @@
                 '{{ url_delversion }}',
                 'delversion{{ project + version }}',
               );">
-          Delete Version
+          删除版本
           </a>
         </td>
       </tr>
