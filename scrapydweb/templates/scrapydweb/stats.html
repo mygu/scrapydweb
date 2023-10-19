@@ -35,7 +35,7 @@ window.onload = function(){
 
 
 {% block body %}
-<h3>PROJECT ({{ project }}), SPIDER ({{ spider }})</h3>
+<h3>项目 ({{ project }}), 爬虫 ({{ spider }})</h3>
 
 {% if url_refresh %}
 <div style="padding: 5px 0;">
@@ -55,14 +55,14 @@ window.onload = function(){
 
 <div class="tab-wrap wrap">
   <ul class="tab tab-header clear-float">
-    <li id="header_analysis">Log analysis</li>
-    <li id="header_categories">Log categorization</li>
+    <li id="header_analysis">日志分析</li>
+    <li id="header_categories">日志分类</li>
     {% if datas|length > 1 %}
-    <li id="header_charts">Progress visualization</li>
+    <li id="header_charts">进度可视化</li>
     {% endif %}
-    <li id="header_logs">View log</li>
+    <li id="header_logs">查看日志</li>
     {% if crawler_stats %}
-    <li id="header_stats">Crawler.stats</li>
+    <li id="header_stats">爬虫统计</li>
     {% endif %}
     {% if crawler_engine %}
     <li id="header_engine">Crawler.engine</li>

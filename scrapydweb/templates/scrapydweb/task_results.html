@@ -29,8 +29,8 @@
 
 
 <h2>
-  <a class="button normal" href="{{ url_tasks }}">Tasks</a>
-  <a class="button warning forbid" href="javascript:;">Task #{{ task_id }} {% if task and task.name %}({{ task.name }}){% endif %}</a>
+  <a class="button normal" href="{{ url_tasks }}">所有任务</a>
+  <a class="button warning forbid" href="javascript:;">任务 #{{ task_id }} {% if task and task.name %}({{ task.name }}){% endif %}</a>
   {% if task %}{{ task.project }}/{{ task.version }}/{{ task.spider }}/{{ task.jobid }}{% endif %}
 </h2>
 
@@ -51,16 +51,16 @@
   >
     <!-- :fit=false -->
 
-    <el-table-column prop="index" label="Index" sortable align="center" width="70"></el-table-column>
+    <el-table-column prop="index" label="序号" sortable align="center" width="70"></el-table-column>
     <!-- <el-table-column prop="id" label="#" sortable align="center" width="80"></el-table-column> -->
-    <el-table-column prop="execute_time" label="Execute time" sortable align="center" width="145"></el-table-column>
-    <el-table-column prop="fail_count" label="Fail count" sortable :sort-orders="sortOrders" align="center" width="100">
+    <el-table-column prop="execute_time" label="执行时间" sortable align="center" width="145"></el-table-column>
+    <el-table-column prop="fail_count" label="错误数量" sortable :sort-orders="sortOrders" align="center" width="100">
       <template slot-scope="scope"><span :class="scope.row.fail_count_class">{{scope.row.fail_count}}</span></template>
     </el-table-column>
-    <el-table-column prop="pass_count" label="Pass count" sortable align="center" width="105">
+    <el-table-column prop="pass_count" label="通过数量" sortable align="center" width="105">
       <template slot-scope="scope"><span :class="scope.row.pass_count_class">{{scope.row.pass_count}}</span></template>
     </el-table-column>
-    <el-table-column prop="task_job_results" label="Job results" sortable :sort-method="sortJobResults" :sort-orders="sortOrders" align="center" width="100">
+    <el-table-column prop="task_job_results" label="任务结果" sortable :sort-method="sortJobResults" :sort-orders="sortOrders" align="center" width="100">
        <template slot-scope="scope">
       <a :class="scope.row.task_job_results_class" :href="scope.row.url_task_job_results">
         <i class="el-icon-loading" :style="{ display: scope.row.task_job_results_display_loading }"></i>
@@ -68,7 +68,7 @@
       </a>
       </template>
     </el-table-column>
-    <el-table-column prop="action" label="Action" sortable :sort-method="sortJobResults" :sort-orders="sortOrders" align="left" min-width="75">
+    <el-table-column prop="action" label="操作" sortable :sort-method="sortJobResults" :sort-orders="sortOrders" align="left" min-width="75">
       <template slot-scope="scope"><a class="state delete" @click="deleteRow(scope.$index, tableData)">Delete</a></template>
     </el-table-column>
   </el-table>
